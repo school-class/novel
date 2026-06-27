@@ -17,7 +17,6 @@
                     <li><a href="genre.html">ジャンル</a></li>
                     <li><a href="ranking.html">ランキング</a></li>
                     <li><a href="new-releases.html">新刊</a></li>
-                    <li><a href="contests.html">コンテスト</a></li>
                 </ul>
             </nav>
             <div class="search-bar">
@@ -89,6 +88,15 @@
                             <p class="description">届かなかった手紙を受け付ける、森の奥の不思議な郵便局の話。</p>
                         </a>
                     </article>
+                </div>
+            </section>
+
+            <section class="section" id="user-submissions-section" style="display: none;">
+                <div class="section-header">
+                    <h2>ユーザー投稿作品</h2>
+                </div>
+                <div id="userSubmissionsGrid" class="novel-grid">
+                    <!-- User works will be injected here -->
                 </div>
             </section>
 
@@ -189,7 +197,6 @@
             <div class="sidebar-section">
                 <h3>公式からのお知らせ</h3>
                 <ul class="news-list">
-                    <li><a href="news.html#news1">夏の短編小説大賞、募集開始！</a></li>
                     <li><a href="news.html#news2">【重要】メンテナンスのお知らせ</a></li>
                     <li><a href="news.html#news3">新人賞受賞作が発表されました</a></li>
                 </ul>
@@ -235,6 +242,39 @@
                 localStorage.removeItem('surge_user');
             }
         });
+
+        const loadUserSubmissions = () => {
+            const allWorks = JSON.parse(localStorage.getItem('surge_user_works_v2')) || {};
+            const grid = document.getElementById('userSubmissionsGrid');
+            const section = document.getElementById('user-submissions-section');
+
+            grid.innerHTML = '';
+            let hasWorks = false;
+
+            Object.keys(allWorks).forEach(email => {
+                allWorks[email].forEach((work) => {
+                    hasWorks = true;
+                    const article = document.createElement('article');
+                    article.className = 'novel-card-modern';
+                    article.innerHTML = `
+                        <div class="genre-tag">${work.genre}</div>
+                        <a href="mypage.html">
+                            <h3>${work.title}</h3>
+                            <p class="author">${work.author}</p>
+                            <p class="description">ユーザー投稿作品 (詳細はマイページへ)</p>
+                        </a>
+                    `;
+                    grid.appendChild(article);
+                });
+            });
+
+            if (hasWorks) {
+                section.style.display = 'block';
+            }
+        };
+
+        // Run after DOM is fully loaded and module is ready
+        loadUserSubmissions();
 
         logoutBtn.addEventListener('click', () => {
             signOut(auth).then(() => {
