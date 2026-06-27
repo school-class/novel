@@ -10,6 +10,11 @@
         .avatar { width: 80px; height: 80px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
         .work-item { border-bottom: 1px solid #eee; padding: 1rem 0; display: flex; justify-content: space-between; align-items: center; }
         .btn-edit { font-size: 0.8rem; padding: 0.3rem 0.8rem; background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; }
+        .tab-nav { display: flex; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; }
+        .tab-btn { padding: 0.5rem 1rem; cursor: pointer; border: none; background: none; font-weight: bold; color: #666; }
+        .tab-btn.active { color: var(--accent-color); border-bottom: 2px solid var(--accent-color); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
 <body>
@@ -35,19 +40,49 @@
                 <div class="avatar">👤</div>
                 <div>
                     <h2 id="userNickname" style="margin:0;">読み込み中...</h2>
-                    <p style="color:#666; margin:0;">Surge小説 プレミアム会員</p>
+                    <p style="color:#666; margin:0;">Surge小説 会員</p>
                 </div>
             </div>
 
-            <section class="section">
-                <div class="section-header">
-                    <h2>投稿済みの作品</h2>
-                    <a href="editor.html" class="btn-primary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">新規作成</a>
-                </div>
-                <div id="myWorksList">
-                    <p id="noWorksMsg">まだ作品がありません。</p>
-                </div>
-            </section>
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="showTab('works')">自分の作品</button>
+                <button class="tab-btn" onclick="showTab('likes')">いいねした作品</button>
+                <button class="tab-btn" onclick="showTab('follows')">フォロー中</button>
+            </div>
+
+            <div id="works" class="tab-content active">
+                <section class="section">
+                    <div class="section-header">
+                        <h2>投稿済みの作品</h2>
+                        <a href="editor.html" class="btn-primary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">新規作成</a>
+                    </div>
+                    <div id="myWorksList">
+                        <p>まだ作品がありません。</p>
+                    </div>
+                </section>
+            </div>
+
+            <div id="likes" class="tab-content">
+                <section class="section">
+                    <div class="section-header">
+                        <h2>いいねした作品</h2>
+                    </div>
+                    <div id="myLikesList">
+                        <p>まだいいねした作品がありません。</p>
+                    </div>
+                </section>
+            </div>
+
+            <div id="follows" class="tab-content">
+                <section class="section">
+                    <div class="section-header">
+                        <h2>フォロー中の作者</h2>
+                    </div>
+                    <div id="myFollowsList">
+                        <p>まだフォローしている作者がいません。</p>
+                    </div>
+                </section>
+            </div>
         </div>
 
         <aside class="sidebar">
@@ -55,8 +90,8 @@
                 <h3>ステータス</h3>
                 <ul style="list-style:none; padding:0; font-size:0.9rem;">
                     <li style="margin-bottom:0.5rem;">投稿数: <span id="workCount">0</span></li>
-                    <li style="margin-bottom:0.5rem;">合計ポイント: 0 pt</li>
-                    <li>フォロワー: 0</li>
+                    <li style="margin-bottom:0.5rem;">いいね受取数: 0</li>
+                    <li>フォロー中: <span id="followCount">0</span></li>
                 </ul>
             </div>
         </aside>
@@ -65,49 +100,51 @@
     <script type="module">
         import { auth, onAuthStateChanged, signOut } from './js/firebase-config.js';
 
+        window.showTab = function(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             onAuthStateChanged(auth, (user) => {
                 if (!user) {
                     window.location.href = 'login.html';
                     return;
                 }
+                const userEmail = user.email;
                 document.getElementById('userNickname').textContent = user.displayName || user.email;
 
-                // Load works specific to this user email to provide basic data isolation in localStorage
+                // 1. Own Works
                 const allWorks = JSON.parse(localStorage.getItem('surge_user_works_v2')) || {};
-                const works = allWorks[user.email] || [];
-                const list = document.getElementById('myWorksList');
+                const works = allWorks[userEmail] || [];
+                const worksList = document.getElementById('myWorksList');
                 document.getElementById('workCount').textContent = works.length;
 
                 if (works.length > 0) {
-                    list.innerHTML = '';
+                    worksList.innerHTML = '';
                     works.forEach((work, index) => {
                         const div = document.createElement('div');
                         div.className = 'work-item';
-
-                        const infoDiv = document.createElement('div');
-                        const titleStrong = document.createElement('strong');
-                        titleStrong.style.fontSize = '1.1rem';
-                        titleStrong.textContent = work.title; // Safe: textContent
-
-                        const dateP = document.createElement('p');
-                        dateP.style.margin = '0';
-                        dateP.style.fontSize = '0.8rem';
-                        dateP.style.color = '#666';
-                        dateP.textContent = `投稿日: ${work.date}`;
-
-                        infoDiv.appendChild(titleStrong);
-                        infoDiv.appendChild(dateP);
-
-                        const editLink = document.createElement('a');
-                        editLink.href = `editor.html?edit=${index}`;
-                        editLink.className = 'btn-edit';
-                        editLink.textContent = '編集する';
-
-                        div.appendChild(infoDiv);
-                        div.appendChild(editLink);
-                        list.appendChild(div);
+                        div.innerHTML = `<div><strong style="font-size:1.1rem;">${work.title}</strong><p style="margin:0; font-size:0.8rem; color:#666;">投稿日: ${work.date}</p></div><a href="editor.html?edit=${index}" class="btn-edit">編集する</a>`;
+                        worksList.appendChild(div);
                     });
+                }
+
+                // 2. Likes
+                const likes = JSON.parse(localStorage.getItem(`surge_likes_${userEmail}`)) || [];
+                const likesList = document.getElementById('myLikesList');
+                if (likes.length > 0) {
+                    likesList.innerHTML = '<ul>' + likes.map(id => `<li>${id}</li>`).join('') + '</ul>';
+                }
+
+                // 3. Follows
+                const follows = JSON.parse(localStorage.getItem(`surge_follows_${userEmail}`)) || [];
+                const followsList = document.getElementById('myFollowsList');
+                document.getElementById('followCount').textContent = follows.length;
+                if (follows.length > 0) {
+                    followsList.innerHTML = '<ul>' + follows.map(name => `<li>${name}</li>`).join('') + '</ul>';
                 }
             });
 

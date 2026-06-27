@@ -50,6 +50,12 @@
 
 さらに物語は深化し、新たな登場人物たちの思惑が交錯します。都会の喧騒と静寂な夜の対比、そして個人の内面で渦巻く葛藤が、繊細な筆致で描き出されていきます。過ぎ去った日々への郷愁と、未だ見ぬ未来への不安。その狭間で揺れ動く魂の叫びが、読者の心に深く響くことでしょう。
         </article>
+
+        <div class="social-actions">
+            <button id="heartBtn" class="btn-social"><span class="icon">🤍</span> いいね</button>
+            <button id="followBtn" class="btn-social">フォローする</button>
+        </div>
+
         <a href="../index.html" class="back-link">← 作品一覧に戻る</a>
 
         <section class="recommended-section" style="margin-top: 4rem; border-top: 2px solid #eee; padding-top: 2rem;">
@@ -70,5 +76,10 @@
     <footer class="main-footer">
         <p>&copy; 2026 Surge小説 Inc.</p>
     </footer>
+
+    <script type="module">
+        import { initSocialFeatures } from '../js/social.js';
+        initSocialFeatures('story18', '宝石 箱');
+    </script>
 </body>
 </html>

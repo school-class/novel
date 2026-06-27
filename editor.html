@@ -140,7 +140,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>\${title} - Surge小説</title>
+    <title>${title} - Surge小説</title>
     <style>
         body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; }
         h1 { border-bottom: 2px solid #333; padding-bottom: 10px; }
@@ -148,8 +148,8 @@
     </style>
 </head>
 <body>
-    <h1>\${title}</h1>
-    <div class="content">\${content}</div>
+    <h1>${title}</h1>
+    <div class="content">${content}</div>
 </body>
 </html>`;
 
@@ -157,7 +157,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `\${title}.html`;
+            a.download = `${title}.html`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
