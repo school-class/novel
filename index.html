@@ -3,30 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surge小説 - 珠玉の短編小説サイト</title>
+    <title>Surge小説 - 国内最大級の短編小説プラットフォーム</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Surge小説</h1>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>Surge小説</h1>
+            </div>
+            <nav class="top-nav">
+                <ul>
+                    <li><a href="#">ジャンル</a></li>
+                    <li><a href="#">ランキング</a></li>
+                    <li><a href="#">新刊</a></li>
+                    <li><a href="#">コンテスト</a></li>
+                </ul>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="キーワード・作者名で検索">
+                <button>検索</button>
+            </div>
+        </div>
     </header>
-    <main>
-        <section>
-            <h2>作品一覧</h2>
-            <ul class="novel-list">
-                <li class="novel-card"><a href="novels/story1.html">星降る夜の散歩道</a></li>
-                <li class="novel-card"><a href="novels/story2.html">失われた記憶の図書館</a></li>
-                <li class="novel-card"><a href="novels/story3.html">猫とコーヒーと、雨の午後</a></li>
-                <li class="novel-card"><a href="novels/story4.html">青い鳥の郵便局</a></li>
-                <li class="novel-card"><a href="novels/story5.html">時計仕掛けの庭園</a></li>
-                <li class="novel-card"><a href="novels/story6.html">夢を売る露店</a></li>
-                <li class="novel-card"><a href="novels/story7.html">深海のオーケストラ</a></li>
-                <li class="novel-card"><a href="novels/story8.html">雪降る町のキャンドル職人</a></li>
-            </ul>
-        </section>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h2>あなたの物語が、ここから始まる。</h2>
+            <p>200,000作品以上の短編小説が無料で読み放題。</p>
+            <div class="hero-btns">
+                <a href="#" class="btn-primary">今すぐ読む</a>
+                <a href="#" class="btn-secondary">小説を書く</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="main-content">
+            <section class="section">
+                <div class="section-header">
+                    <h2>注目の新着作品</h2>
+                    <a href="#" class="view-more">もっと見る</a>
+                </div>
+                <div class="novel-grid">
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">幻想</div>
+                        <a href="novels/story1.html">
+                            <h3>星降る夜の散歩道</h3>
+                            <p class="author">蒼井 空</p>
+                            <p class="description">丘の上の大きな樫の木の下、少年は一匹の銀色の狐に出会う。</p>
+                        </a>
+                    </article>
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">ミステリー</div>
+                        <a href="novels/story2.html">
+                            <h3>失われた記憶の図書館</h3>
+                            <p class="author">山田 文夫</p>
+                            <p class="description">透明な小瓶に詰められた記憶。青年は十年前の雨の日の記憶を探す。</p>
+                        </a>
+                    </article>
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">現代ドラマ</div>
+                        <a href="novels/story3.html">
+                            <h3>猫とコーヒーと、雨の午後</h3>
+                            <p class="author">佐藤 陽子</p>
+                            <p class="description">しとしとと降る雨の午後、カフェ「三日月」で出会う穏やかな時間。</p>
+                        </a>
+                    </article>
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">童話</div>
+                        <a href="novels/story4.html">
+                            <h3>青い鳥の郵便局</h3>
+                            <p class="author">森野 くま</p>
+                            <p class="description">届かなかった手紙を受け付ける、森の奥の不思議な郵便局の話。</p>
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2>ファンタジー・SF</h2>
+                </div>
+                <div class="novel-grid">
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">SF</div>
+                        <a href="novels/story5.html">
+                            <h3>時計仕掛けの庭園</h3>
+                            <p class="author">ギヤ・ワッツ</p>
+                        </a>
+                    </article>
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">ファンタジー</div>
+                        <a href="novels/story6.html">
+                            <h3>夢を売る露店</h3>
+                            <p class="author">夢野 幻</p>
+                        </a>
+                    </article>
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">SF</div>
+                        <a href="novels/story9.html">
+                            <h3>電脳世界の迷い子</h3>
+                            <p class="author">ネオ</p>
+                        </a>
+                    </article>
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">ファンタジー</div>
+                        <a href="novels/story11.html">
+                            <h3>空飛ぶクジラの背中で</h3>
+                            <p class="author">天野 雲</p>
+                        </a>
+                    </article>
+                    <article class="novel-card-modern">
+                        <div class="genre-tag">SF</div>
+                        <a href="novels/story17.html">
+                            <h3>AIが書くラブレター</h3>
+                            <p class="author">ビット くん</p>
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2>人気ジャンル別</h2>
+                </div>
+                <div class="genre-list">
+                    <div class="genre-group">
+                        <h3>ミステリー・ホラー</h3>
+                        <ul>
+                            <li><a href="novels/story12.html">廃墟のオルゴール</a> <span class="author-small">暗闇 零</span></li>
+                            <li><a href="novels/story19.html">霧の街の探偵事務所</a> <span class="author-small">シャーロック</span></li>
+                            <li><a href="novels/story2.html">失われた記憶の図書館</a> <span class="author-small">山田 文夫</span></li>
+                        </ul>
+                    </div>
+                    <div class="genre-group">
+                        <h3>現代・学園・恋愛</h3>
+                        <ul>
+                            <li><a href="novels/story13.html">放課後の魔法教室</a> <span class="author-small">魔法 麗子</span></li>
+                            <li><a href="novels/story16.html">桜並木の約束</a> <span class="author-small">春風 花</span></li>
+                            <li><a href="novels/story8.html">雪降る町のキャンドル職人</a> <span class="author-small">冬月 凛</span></li>
+                        </ul>
+                    </div>
+                    <div class="genre-group">
+                        <h3>その他</h3>
+                        <ul>
+                            <li><a href="novels/story15.html">旅するキッチンワゴン</a> <span class="author-small">旨味 大好き</span></li>
+                            <li><a href="novels/story20.html">神様がくれた休日</a> <span class="author-small">笑福 亭</span></li>
+                            <li><a href="novels/story10.html">侍と一輪のひまわり</a> <span class="author-small">時代 劇三郎</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>日間ランキング</h3>
+                <ol class="ranking-list">
+                    <li><a href="novels/story1.html">星降る夜の散歩道</a></li>
+                    <li><a href="novels/story14.html">月明かりの怪盗</a></li>
+                    <li><a href="novels/story3.html">猫とコーヒーと、雨の午後</a></li>
+                    <li><a href="novels/story7.html">深海のオーケストラ</a></li>
+                    <li><a href="novels/story18.html">宝石の森の守り人</a></li>
+                </ol>
+            </div>
+            <div class="sidebar-section">
+                <h3>公式からのお知らせ</h3>
+                <ul class="news-list">
+                    <li><a href="#">夏の短編小説大賞、募集開始！</a></li>
+                    <li><a href="#">【重要】メンテナンスのお知らせ</a></li>
+                    <li><a href="#">新人賞受賞作が発表されました</a></li>
+                </ul>
+            </div>
+        </aside>
     </main>
-    <footer>
-        <p>&copy; 2023 Surge小説</p>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <ul>
+                    <li><a href="#">会社概要</a></li>
+                    <li><a href="#">利用規約</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                    <li><a href="#">お問い合わせ</a></li>
+                </ul>
+            </div>
+            <p>&copy; 2023 Surge小説 Inc.</p>
+        </div>
     </footer>
 </body>
 </html>
