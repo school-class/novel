@@ -55,48 +55,8 @@
                     <h2>注目の新着作品</h2>
                     <a href="new-releases.html" class="view-more">もっと見る</a>
                 </div>
-                <div class="novel-grid">
-                    <article class="novel-card-modern">
-                        <div class="genre-tag">幻想</div>
-                        <a href="novels/story1.html">
-                            <h3>星降る夜の散歩道</h3>
-                            <p class="author">蒼井 空</p>
-                            <p class="description">丘の上の大きな樫の木の下、少年は一匹の銀色の狐に出会う。</p>
-                        </a>
-                    </article>
-                    <article class="novel-card-modern">
-                        <div class="genre-tag">ミステリー</div>
-                        <a href="novels/story2.html">
-                            <h3>失われた記憶の図書館</h3>
-                            <p class="author">山田 文夫</p>
-                            <p class="description">透明な小瓶に詰められた記憶。青年は十年前の雨の日の記憶を探す。</p>
-                        </a>
-                    </article>
-                    <article class="novel-card-modern">
-                        <div class="genre-tag">現代ドラマ</div>
-                        <a href="novels/story3.html">
-                            <h3>猫とコーヒーと、雨の午後</h3>
-                            <p class="author">佐藤 陽子</p>
-                            <p class="description">しとしとと降る雨の午後、カフェ「三日月」で出会う穏やかな時間。</p>
-                        </a>
-                    </article>
-                    <article class="novel-card-modern">
-                        <div class="genre-tag">童話</div>
-                        <a href="novels/story4.html">
-                            <h3>青い鳥の郵便局</h3>
-                            <p class="author">森野 くま</p>
-                            <p class="description">届かなかった手紙を受け付ける、森の奥の不思議な郵便局の話。</p>
-                        </a>
-                    </article>
-                </div>
-            </section>
-
-            <section class="section" id="user-submissions-section" style="display: none;">
-                <div class="section-header">
-                    <h2>ユーザー投稿作品</h2>
-                </div>
-                <div id="userSubmissionsGrid" class="novel-grid">
-                    <!-- User works will be injected here -->
+                <div id="featuredGrid" class="novel-grid">
+                    <!-- Dynamic Featured Content -->
                 </div>
             </section>
 
@@ -221,6 +181,7 @@
 
     <script type="module">
         import { auth, onAuthStateChanged, signOut } from './js/firebase-config.js';
+        import { officialCatalog } from './js/catalog.js';
 
         const authLinks = document.getElementById('authLinks');
         const userLinks = document.getElementById('userLinks');
@@ -243,38 +204,58 @@
             }
         });
 
-        const loadUserSubmissions = () => {
+        const loadFeatured = () => {
+            const grid = document.getElementById('featuredGrid');
             const allWorks = JSON.parse(localStorage.getItem('surge_user_works_v2')) || {};
-            const grid = document.getElementById('userSubmissionsGrid');
-            const section = document.getElementById('user-submissions-section');
 
-            grid.innerHTML = '';
-            let hasWorks = false;
+            let combined = [];
 
+            // Add user works (limit to 4 for featured)
             Object.keys(allWorks).forEach(email => {
-                allWorks[email].forEach((work) => {
-                    hasWorks = true;
-                    const article = document.createElement('article');
-                    article.className = 'novel-card-modern';
-                    article.innerHTML = `
-                        <div class="genre-tag">${work.genre}</div>
-                        <a href="mypage.html">
-                            <h3>${work.title}</h3>
-                            <p class="author">${work.author}</p>
-                            <p class="description">ユーザー投稿作品 (詳細はマイページへ)</p>
-                        </a>
-                    `;
-                    grid.appendChild(article);
+                allWorks[email].forEach((work, index) => {
+                    combined.push({
+                        title: work.title,
+                        author: work.author,
+                        genre: work.genre,
+                        description: "ユーザー投稿作品",
+                        url: `reader.html?user=${encodeURIComponent(email)}&id=${index}`,
+                        isUser: true
+                    });
                 });
             });
 
-            if (hasWorks) {
-                section.style.display = 'block';
-            }
+            // Reverse user works to show newest first
+            combined.reverse();
+
+            // Fill up with official catalog until we have 4 or more
+            officialCatalog.forEach(item => {
+                if (combined.length < 8) {
+                    combined.push({
+                        ...item,
+                        isUser: false
+                    });
+                }
+            });
+
+            grid.innerHTML = '';
+            combined.slice(0, 4).forEach(work => {
+                const article = document.createElement('article');
+                article.className = 'novel-card-modern';
+                if (work.isUser) article.style.border = '1px solid var(--accent-color)';
+
+                article.innerHTML = `
+                    <div class="genre-tag">${work.genre}</div>
+                    <a href="${work.url}">
+                        <h3>${work.title}</h3>
+                        <p class="author">${work.author}</p>
+                        <p class="description">${work.description}</p>
+                    </a>
+                `;
+                grid.appendChild(article);
+            });
         };
 
-        // Run after DOM is fully loaded and module is ready
-        loadUserSubmissions();
+        loadFeatured();
 
         logoutBtn.addEventListener('click', () => {
             signOut(auth).then(() => {

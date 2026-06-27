@@ -13,13 +13,12 @@
 <body>
     <header class="main-header">
         <div class="header-container">
-            <div class="logo"><a href="index.html" style="color: inherit;"><h1>Surge小説</h1></a></div>
+            <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;"><h1>Surge小説</h1></a></div>
             <nav class="top-nav">
                 <ul>
                     <li><a href="genre.html">ジャンル</a></li>
                     <li><a href="ranking.html">ランキング</a></li>
                     <li><a href="new-releases.html">新刊</a></li>
-
                 </ul>
             </nav>
         </div>
@@ -31,82 +30,14 @@
 
             <div class="filter-bar">
                 <span>並び替え:</span>
-                <select>
-                    <option>投稿日時が新しい順</option>
-                    <option>更新日時が新しい順</option>
-                </select>
-                <span style="margin-left: 1rem;">ジャンル:</span>
-                <select>
-                    <option>すべて</option>
-                    <option>幻想</option>
-                    <option>SF</option>
-                    <option>ミステリー</option>
-                    <option>現代ドラマ</option>
+                <select id="sortOrder">
+                    <option value="new">投稿日時が新しい順</option>
+                    <option value="old">投稿日時が古い順</option>
                 </select>
             </div>
 
-            <div class="novel-grid">
-                <!-- Reusing some from index + others -->
-                <article class="novel-card-modern">
-                    <div class="genre-tag">幻想</div>
-                    <a href="novels/story1.html">
-                        <h3>星降る夜の散歩道</h3>
-                        <p class="author">蒼井 空</p>
-                        <p class="description">丘の上の大きな樫の木の下、少年は一匹の銀色の狐に出会う。</p>
-                    </a>
-                </article>
-                <article class="novel-card-modern">
-                    <div class="genre-tag">SF</div>
-                    <a href="novels/story5.html">
-                        <h3>時計仕掛けの庭園</h3>
-                        <p class="author">ギヤ・ワッツ</p>
-                        <p class="description">全ての歯車が止まったとき、真実の扉が開く。</p>
-                    </a>
-                </article>
-                <article class="novel-card-modern">
-                    <div class="genre-tag">ミステリー</div>
-                    <a href="novels/story19.html">
-                        <h3>霧の街の探偵事務所</h3>
-                        <p class="author">シャーロック</p>
-                        <p class="description">消えたダイヤモンドと、残された一枚のトランプ。</p>
-                    </a>
-                </article>
-                <!-- Add more -->
-                <article class="novel-card-modern">
-                    <div class="genre-tag">現代ドラマ</div>
-                    <a href="novels/story3.html">
-                        <h3>猫とコーヒーと、雨の午後</h3>
-                        <p class="author">佐藤 陽子</p>
-                    </a>
-                </article>
-                <article class="novel-card-modern">
-                    <div class="genre-tag">幻想</div>
-                    <a href="novels/story6.html">
-                        <h3>夢を売る露店</h3>
-                        <p class="author">夢野 幻</p>
-                    </a>
-                </article>
-                <article class="novel-card-modern">
-                    <div class="genre-tag">SF</div>
-                    <a href="novels/story9.html">
-                        <h3>電脳世界の迷い子</h3>
-                        <p class="author">ネオ</p>
-                    </a>
-                </article>
-                <article class="novel-card-modern">
-                    <div class="genre-tag">短編</div>
-                    <a href="novels/story22.html">
-                        <h3>短編小説 第22話</h3>
-                        <p class="author">Surge作家</p>
-                    </a>
-                </article>
-                <article class="novel-card-modern">
-                    <div class="genre-tag">短編</div>
-                    <a href="novels/story23.html">
-                        <h3>短編小説 第23話</h3>
-                        <p class="author">Surge作家</p>
-                    </a>
-                </article>
+            <div id="newReleasesGrid" class="novel-grid">
+                <!-- Dynamic Content -->
             </div>
         </div>
     </main>
@@ -116,5 +47,71 @@
             <p>&copy; 2026 Surge小説 Inc.</p>
         </div>
     </footer>
+
+    <script type="module">
+        import { officialCatalog } from './js/catalog.js';
+
+        const loadWorks = () => {
+            const grid = document.getElementById('newReleasesGrid');
+            const allWorks = JSON.parse(localStorage.getItem('surge_user_works_v2')) || {};
+
+            let combined = [];
+
+            // Add user works
+            Object.keys(allWorks).forEach(email => {
+                allWorks[email].forEach((work, index) => {
+                    combined.push({
+                        title: work.title,
+                        author: work.author,
+                        genre: work.genre,
+                        description: "ユーザー投稿作品",
+                        url: `reader.html?user=${encodeURIComponent(email)}&id=${index}`,
+                        date: work.date,
+                        isUser: true
+                    });
+                });
+            });
+
+            // Sort user works (newest first)
+            combined.reverse();
+
+            // Add official works (simplified for new releases)
+            officialCatalog.forEach(item => {
+                combined.push({
+                    ...item,
+                    date: "2026/06/01", // Placeholder
+                    isUser: false
+                });
+            });
+
+            const render = (items) => {
+                grid.innerHTML = '';
+                items.forEach(work => {
+                    const article = document.createElement('article');
+                    article.className = 'novel-card-modern';
+                    if (work.isUser) article.style.border = '1px solid var(--accent-color)';
+
+                    article.innerHTML = `
+                        <div class="genre-tag">${work.genre}</div>
+                        <a href="${work.url}">
+                            <h3>${work.title}</h3>
+                            <p class="author">${work.author}</p>
+                            <p class="description">${work.description || ''}</p>
+                        </a>
+                    `;
+                    grid.appendChild(article);
+                });
+            };
+
+            render(combined);
+
+            document.getElementById('sortOrder').onchange = (e) => {
+                const sorted = e.target.value === 'new' ? [...combined] : [...combined].reverse();
+                render(sorted);
+            };
+        };
+
+        loadWorks();
+    </script>
 </body>
 </html>

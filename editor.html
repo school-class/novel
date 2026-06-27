@@ -122,8 +122,15 @@
 
             allWorks[currentUser.email] = works;
             localStorage.setItem('surge_user_works_v2', JSON.stringify(allWorks));
-            alert('投稿が完了しました！トップページやマイページで確認できます。');
-            window.location.href = 'mypage.html';
+
+            const workId = editIndex !== null ? editIndex : works.length - 1;
+            const viewUrl = `reader.html?user=${encodeURIComponent(currentUser.email)}&id=${workId}`;
+
+            if (confirm('投稿が完了しました！今すぐ作品を確認しますか？')) {
+                window.location.href = viewUrl;
+            } else {
+                window.location.href = 'mypage.html';
+            }
         }
 
         window.downloadWork = function() {
