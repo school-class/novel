@@ -14,8 +14,8 @@
             </div>
             <nav class="top-nav">
                 <ul>
-                    <li><a href="#">ジャンル</a></li>
-                    <li><a href="#">ランキング</a></li>
+                    <li><a href="genre.html">ジャンル</a></li>
+                    <li><a href="ranking.html">ランキング</a></li>
                     <li><a href="#">新刊</a></li>
                     <li><a href="#">コンテスト</a></li>
                 </ul>
@@ -23,6 +23,10 @@
             <div class="search-bar">
                 <input type="text" placeholder="キーワード・作者名で検索">
                 <button>検索</button>
+            </div>
+            <div class="user-nav" style="margin-left: 1rem;">
+                <a href="login.html" class="btn-login" id="loginBtn">ログイン</a>
+                <a href="mypage.html" class="btn-mypage" id="mypageBtn" style="display:none;">マイページ</a>
             </div>
         </div>
     </header>
@@ -32,8 +36,8 @@
             <h2>あなたの物語が、ここから始まる。</h2>
             <p>200,000作品以上の短編小説が無料で読み放題。</p>
             <div class="hero-btns">
-                <a href="#" class="btn-primary">今すぐ読む</a>
-                <a href="#" class="btn-secondary">小説を書く</a>
+                <a href="#novel-list" class="btn-primary">今すぐ読む</a>
+                <a href="editor.html" class="btn-secondary">小説を書く</a>
             </div>
         </div>
     </div>
@@ -138,7 +142,7 @@
                 </div>
             </section>
 
-            <section class="section">
+            <section class="section" id="novel-list">
                 <div class="section-header">
                     <h2>人気ジャンル別</h2>
                 </div>
@@ -151,6 +155,8 @@
                             <li><a href="novels/story2.html">失われた記憶の図書館</a> <span class="author-small">山田 文夫</span></li>
                             <li><a href="novels/story23.html">短編小説 第23話</a> <span class="author-small">Surge作家</span></li>
                             <li><a href="novels/story24.html">短編小説 第24話</a> <span class="author-small">Surge作家</span></li>
+                            <li><a href="novels/story29.html">短編小説 第29話</a> <span class="author-small">Surge作家</span></li>
+                            <li><a href="novels/story30.html">短編小説 第30話</a> <span class="author-small">Surge作家</span></li>
                         </ul>
                     </div>
                     <div class="genre-group">
@@ -161,6 +167,8 @@
                             <li><a href="novels/story8.html">雪降る町のキャンドル職人</a> <span class="author-small">冬月 凛</span></li>
                             <li><a href="novels/story25.html">短編小説 第25話</a> <span class="author-small">Surge作家</span></li>
                             <li><a href="novels/story26.html">短編小説 第26話</a> <span class="author-small">Surge作家</span></li>
+                            <li><a href="novels/story31.html">短編小説 第31話</a> <span class="author-small">Surge作家</span></li>
+                            <li><a href="novels/story32.html">短編小説 第32話</a> <span class="author-small">Surge作家</span></li>
                         </ul>
                     </div>
                     <div class="genre-group">
@@ -170,7 +178,9 @@
                             <li><a href="novels/story20.html">神様がくれた休日</a> <span class="author-small">笑福 亭</span></li>
                             <li><a href="novels/story10.html">侍と一輪のひまわり</a> <span class="author-small">時代 劇三郎</span></li>
                             <li><a href="novels/story27.html">短編小説 第27話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story28.html">短編小説 第28話...他</a> <span class="author-small">Surge作家</span></li>
+                            <li><a href="novels/story28.html">短編小説 第28話</a> <span class="author-small">Surge作家</span></li>
+                            <li><a href="novels/story33.html">短編小説 第33話</a> <span class="author-small">Surge作家</span></li>
+                            <li><a href="novels/story40.html">短編小説 第40話</a> <span class="author-small">Surge作家</span></li>
                         </ul>
                     </div>
                 </div>
@@ -200,6 +210,16 @@
     </main>
 
     <footer class="main-footer">
+        <script>
+            // Simple Auth Check for UI
+            document.addEventListener('DOMContentLoaded', () => {
+                const user = JSON.parse(localStorage.getItem('surge_user'));
+                if (user) {
+                    document.getElementById('loginBtn').style.display = 'none';
+                    document.getElementById('mypageBtn').style.display = 'inline-block';
+                }
+            });
+        </script>
         <div class="footer-container">
             <div class="footer-links">
                 <ul>
