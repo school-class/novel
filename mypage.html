@@ -15,7 +15,7 @@
 <body>
     <header class="main-header">
         <div class="header-container">
-            <div class="logo"><a href="index.html" style="color: inherit;"><h1>Surge小説</h1></a></div>
+            <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;"><h1>Surge小説</h1></a></div>
             <nav class="top-nav">
                 <ul>
                     <li><a href="genre.html">ジャンル</a></li>
@@ -24,7 +24,7 @@
                 </ul>
             </nav>
             <div class="user-nav" style="margin-left: auto;">
-                <button onclick="logout()" style="background:none; border:none; color:var(--text-muted); cursor:pointer;">ログアウト</button>
+                <button id="logoutBtn" style="background:none; border:none; color:var(--text-muted); cursor:pointer;">ログアウト</button>
             </div>
         </div>
     </header>
@@ -62,40 +62,62 @@
         </aside>
     </main>
 
-    <script>
+    <script type="module">
+        import { auth, onAuthStateChanged, signOut } from './js/firebase-config.js';
+
         document.addEventListener('DOMContentLoaded', () => {
-            const user = JSON.parse(localStorage.getItem('surge_user'));
-            if (!user) {
-                window.location.href = 'login.html';
-                return;
-            }
-            document.getElementById('userNickname').textContent = user.nickname;
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                document.getElementById('userNickname').textContent = user.displayName || user.email;
 
-            const works = JSON.parse(localStorage.getItem('surge_user_works')) || [];
-            const list = document.getElementById('myWorksList');
-            document.getElementById('workCount').textContent = works.length;
+                // Load works specific to this user email to provide basic data isolation in localStorage
+                const allWorks = JSON.parse(localStorage.getItem('surge_user_works_v2')) || {};
+                const works = allWorks[user.email] || [];
+                const list = document.getElementById('myWorksList');
+                document.getElementById('workCount').textContent = works.length;
 
-            if (works.length > 0) {
-                list.innerHTML = '';
-                works.forEach((work, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'work-item';
-                    div.innerHTML = `
-                        <div>
-                            <strong style="font-size:1.1rem;">${work.title}</strong>
-                            <p style="margin:0; font-size:0.8rem; color:#666;">投稿日: ${work.date}</p>
-                        </div>
-                        <a href="editor.html?edit=${index}" class="btn-edit">編集する</a>
-                    `;
-                    list.appendChild(div);
+                if (works.length > 0) {
+                    list.innerHTML = '';
+                    works.forEach((work, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'work-item';
+
+                        const infoDiv = document.createElement('div');
+                        const titleStrong = document.createElement('strong');
+                        titleStrong.style.fontSize = '1.1rem';
+                        titleStrong.textContent = work.title; // Safe: textContent
+
+                        const dateP = document.createElement('p');
+                        dateP.style.margin = '0';
+                        dateP.style.fontSize = '0.8rem';
+                        dateP.style.color = '#666';
+                        dateP.textContent = `投稿日: ${work.date}`;
+
+                        infoDiv.appendChild(titleStrong);
+                        infoDiv.appendChild(dateP);
+
+                        const editLink = document.createElement('a');
+                        editLink.href = `editor.html?edit=${index}`;
+                        editLink.className = 'btn-edit';
+                        editLink.textContent = '編集する';
+
+                        div.appendChild(infoDiv);
+                        div.appendChild(editLink);
+                        list.appendChild(div);
+                    });
+                }
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    localStorage.removeItem('surge_user');
+                    window.location.href = 'index.html';
                 });
-            }
+            });
         });
-
-        function logout() {
-            localStorage.removeItem('surge_user');
-            window.location.href = 'index.html';
-        }
     </script>
 </body>
 </html>

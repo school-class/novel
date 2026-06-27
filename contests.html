@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンテスト - Surge小説</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contest-card { background: white; border-radius: 12px; overflow: hidden; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid var(--border-color); }
+        .contest-banner { background: var(--primary-color); color: white; padding: 2rem; text-align: center; }
+        .contest-banner h2 { font-size: 1.8rem; margin: 0; }
+        .contest-info { padding: 2rem; }
+        .contest-status { display: inline-block; padding: 0.2rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-bottom: 1rem; }
+        .status-open { background: #27ae60; color: white; }
+        .status-closed { background: #95a5a6; color: white; }
+        .contest-details table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .contest-details th, .contest-details td { padding: 0.8rem; border-bottom: 1px solid var(--border-color); text-align: left; }
+        .contest-details th { width: 30%; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html" style="color: inherit;"><h1>Surge小説</h1></a></div>
+            <nav class="top-nav">
+                <ul>
+                    <li><a href="genre.html">ジャンル</a></li>
+                    <li><a href="ranking.html">ランキング</a></li>
+                    <li><a href="new-releases.html">新刊</a></li>
+                    <li><a href="contests.html">コンテスト</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <h1 style="margin-bottom: 2rem;">開催中のコンテスト</h1>
+
+            <div class="contest-card">
+                <div class="contest-banner" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
+                    <h2>第5回 Surge夏の短編小説大賞</h2>
+                </div>
+                <div class="contest-info">
+                    <span class="contest-status status-open">募集中</span>
+                    <p>今年のテーマは「再会」。出会いと別れの季節、あなたの描く特別な再会の物語を募集します。</p>
+                    <div class="contest-details">
+                        <table>
+                            <tr><th>募集期間</th><td>2026年6月25日 〜 8月31日 23:59</td></tr>
+                            <tr><th>文字数規定</th><td>2,000文字 〜 10,000文字</td></tr>
+                            <tr><th>賞品</th><td>大賞(1名): 賞金30万円、入賞(3名): 賞金5万円</td></tr>
+                        </table>
+                    </div>
+                    <a href="editor.html" class="btn-primary" style="display: inline-block; margin-top: 1.5rem; border-radius: 4px;">このコンテストに応募する</a>
+                </div>
+            </div>
+
+            <h1 style="margin: 3rem 0 2rem;">過去のコンテスト</h1>
+            <div class="contest-card">
+                <div class="contest-banner" style="background: #34495e;">
+                    <h2>第12回 Surge新人賞</h2>
+                </div>
+                <div class="contest-info">
+                    <span class="contest-status status-closed">終了</span>
+                    <p>ジャンル不問！次世代を担う才能を募集。多数のご応募ありがとうございました。</p>
+                    <a href="news.html#news3" class="view-more">結果発表を見る</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Surge小説 Inc.</p>
+        </div>
+    </footer>
+</body>
+</html>

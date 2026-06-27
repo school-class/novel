@@ -12,6 +12,7 @@
         .form-group label { display: block; margin-bottom: 0.5rem; }
         .form-group input { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
         .btn-auth { width: 100%; padding: 1rem; background: var(--accent-color); color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .error-message { color: red; margin-bottom: 1rem; text-align: center; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -24,14 +25,15 @@
     <main class="container">
         <div class="auth-form">
             <h2>ログイン</h2>
+            <div id="errorMessage" class="error-message"></div>
             <form id="loginForm">
                 <div class="form-group">
                     <label>メールアドレス</label>
-                    <input type="email" required value="test@example.com">
+                    <input type="email" id="email" required>
                 </div>
                 <div class="form-group">
                     <label>パスワード</label>
-                    <input type="password" required value="password123">
+                    <input type="password" id="password" required>
                 </div>
                 <button type="submit" class="btn-auth">ログイン</button>
             </form>
@@ -41,13 +43,29 @@
         </div>
     </main>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+    <script type="module">
+        import { auth, signInWithEmailAndPassword } from './js/firebase-config.js';
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            // Mock authentication
-            const user = { email: 'test@example.com', nickname: 'サージ太郎' };
-            localStorage.setItem('surge_user', JSON.stringify(user));
-            window.location.href = 'mypage.html';
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = '';
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                // For backward compatibility with other pages using localStorage
+                localStorage.setItem('surge_user', JSON.stringify({
+                    email: user.email,
+                    nickname: user.displayName || '名無しさん'
+                }));
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error("Login Error:", error);
+                errorDiv.textContent = 'ログインに失敗しました。メールアドレスまたはパスワードが正しくありません。';
+            }
         });
     </script>
 </body>

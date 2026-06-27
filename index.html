@@ -10,23 +10,30 @@
     <header class="main-header">
         <div class="header-container">
             <div class="logo">
-                <h1>Surge小説</h1>
+                <a href="index.html" style="color: inherit; text-decoration: none;"><h1>Surge小説</h1></a>
             </div>
             <nav class="top-nav">
                 <ul>
                     <li><a href="genre.html">ジャンル</a></li>
                     <li><a href="ranking.html">ランキング</a></li>
-                    <li><a href="#">新刊</a></li>
-                    <li><a href="#">コンテスト</a></li>
+                    <li><a href="new-releases.html">新刊</a></li>
+                    <li><a href="contests.html">コンテスト</a></li>
                 </ul>
             </nav>
             <div class="search-bar">
                 <input type="text" placeholder="キーワード・作者名で検索">
                 <button>検索</button>
             </div>
-            <div class="user-nav" style="margin-left: 1rem;">
-                <a href="login.html" class="btn-login" id="loginBtn">ログイン</a>
-                <a href="mypage.html" class="btn-mypage" id="mypageBtn" style="display:none;">マイページ</a>
+            <div class="user-nav">
+                <div id="authLinks">
+                    <a href="login.html" class="btn-login">ログイン</a>
+                    <a href="signup.html" class="btn-signup" style="margin-left: 0.5rem; background: var(--accent-color); color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none;">新規登録</a>
+                </div>
+                <div id="userLinks" style="display: none; align-items: center; gap: 1rem;">
+                    <span id="userNameDisplay" style="font-weight: bold;"></span>
+                    <a href="mypage.html" class="btn-mypage">マイページ</a>
+                    <button id="logoutBtn" style="background: none; border: 1px solid #ccc; padding: 0.3rem 0.6rem; cursor: pointer; border-radius: 4px;">ログアウト</button>
+                </div>
             </div>
         </div>
     </header>
@@ -47,7 +54,7 @@
             <section class="section">
                 <div class="section-header">
                     <h2>注目の新着作品</h2>
-                    <a href="#" class="view-more">もっと見る</a>
+                    <a href="new-releases.html" class="view-more">もっと見る</a>
                 </div>
                 <div class="novel-grid">
                     <article class="novel-card-modern">
@@ -132,13 +139,6 @@
                             <p class="author">未来 まどか</p>
                         </a>
                     </article>
-                    <article class="novel-card-modern">
-                        <div class="genre-tag">短編</div>
-                        <a href="novels/story22.html">
-                            <h3>短編小説 第22話</h3>
-                            <p class="author">Surge作家</p>
-                        </a>
-                    </article>
                 </div>
             </section>
 
@@ -153,10 +153,6 @@
                             <li><a href="novels/story12.html">廃墟のオルゴール</a> <span class="author-small">暗闇 零</span></li>
                             <li><a href="novels/story19.html">霧の街の探偵事務所</a> <span class="author-small">シャーロック</span></li>
                             <li><a href="novels/story2.html">失われた記憶の図書館</a> <span class="author-small">山田 文夫</span></li>
-                            <li><a href="novels/story23.html">短編小説 第23話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story24.html">短編小説 第24話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story29.html">短編小説 第29話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story30.html">短編小説 第30話</a> <span class="author-small">Surge作家</span></li>
                         </ul>
                     </div>
                     <div class="genre-group">
@@ -165,10 +161,6 @@
                             <li><a href="novels/story13.html">放課後の魔法教室</a> <span class="author-small">魔法 麗子</span></li>
                             <li><a href="novels/story16.html">桜並木の約束</a> <span class="author-small">春風 花</span></li>
                             <li><a href="novels/story8.html">雪降る町のキャンドル職人</a> <span class="author-small">冬月 凛</span></li>
-                            <li><a href="novels/story25.html">短編小説 第25話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story26.html">短編小説 第26話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story31.html">短編小説 第31話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story32.html">短編小説 第32話</a> <span class="author-small">Surge作家</span></li>
                         </ul>
                     </div>
                     <div class="genre-group">
@@ -177,10 +169,6 @@
                             <li><a href="novels/story15.html">旅するキッチンワゴン</a> <span class="author-small">旨味 大好き</span></li>
                             <li><a href="novels/story20.html">神様がくれた休日</a> <span class="author-small">笑福 亭</span></li>
                             <li><a href="novels/story10.html">侍と一輪のひまわり</a> <span class="author-small">時代 劇三郎</span></li>
-                            <li><a href="novels/story27.html">短編小説 第27話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story28.html">短編小説 第28話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story33.html">短編小説 第33話</a> <span class="author-small">Surge作家</span></li>
-                            <li><a href="novels/story40.html">短編小説 第40話</a> <span class="author-small">Surge作家</span></li>
                         </ul>
                     </div>
                 </div>
@@ -201,36 +189,58 @@
             <div class="sidebar-section">
                 <h3>公式からのお知らせ</h3>
                 <ul class="news-list">
-                    <li><a href="#">夏の短編小説大賞、募集開始！</a></li>
-                    <li><a href="#">【重要】メンテナンスのお知らせ</a></li>
-                    <li><a href="#">新人賞受賞作が発表されました</a></li>
+                    <li><a href="news.html#news1">夏の短編小説大賞、募集開始！</a></li>
+                    <li><a href="news.html#news2">【重要】メンテナンスのお知らせ</a></li>
+                    <li><a href="news.html#news3">新人賞受賞作が発表されました</a></li>
                 </ul>
             </div>
         </aside>
     </main>
 
     <footer class="main-footer">
-        <script>
-            // Simple Auth Check for UI
-            document.addEventListener('DOMContentLoaded', () => {
-                const user = JSON.parse(localStorage.getItem('surge_user'));
-                if (user) {
-                    document.getElementById('loginBtn').style.display = 'none';
-                    document.getElementById('mypageBtn').style.display = 'inline-block';
-                }
-            });
-        </script>
         <div class="footer-container">
             <div class="footer-links">
                 <ul>
-                    <li><a href="#">会社概要</a></li>
-                    <li><a href="#">利用規約</a></li>
-                    <li><a href="#">プライバシーポリシー</a></li>
-                    <li><a href="#">お問い合わせ</a></li>
+                    <li><a href="about.html">会社概要</a></li>
+                    <li><a href="terms.html">利用規約</a></li>
+                    <li><a href="privacy.html">プライバシーポリシー</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                    <li><a href="guide.html">ご利用ガイド</a></li>
                 </ul>
             </div>
             <p>&copy; 2026 Surge小説 Inc.</p>
         </div>
     </footer>
+
+    <script type="module">
+        import { auth, onAuthStateChanged, signOut } from './js/firebase-config.js';
+
+        const authLinks = document.getElementById('authLinks');
+        const userLinks = document.getElementById('userLinks');
+        const userNameDisplay = document.getElementById('userNameDisplay');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authLinks.style.display = 'none';
+                userLinks.style.display = 'flex';
+                userNameDisplay.textContent = user.displayName || user.email;
+                localStorage.setItem('surge_user', JSON.stringify({
+                    email: user.email,
+                    nickname: user.displayName || '名無しさん'
+                }));
+            } else {
+                authLinks.style.display = 'block';
+                userLinks.style.display = 'none';
+                localStorage.removeItem('surge_user');
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.reload();
+            });
+        });
+    </script>
 </body>
 </html>

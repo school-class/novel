@@ -428,3 +428,31 @@ a:hover {
         box-sizing: border-box;
     }
 }
+
+/* User Nav Styles */
+.user-nav {
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.btn-login {
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.btn-signup:hover {
+    background-color: #2980b9 !important;
+    text-decoration: none;
+}
+
+#logoutBtn:hover {
+    background-color: #f0f0f0 !important;
+}
+
+#userNameDisplay {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+}

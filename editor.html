@@ -19,7 +19,7 @@
 <body>
     <header class="main-header">
         <div class="header-container">
-            <div class="logo"><a href="index.html" style="color: inherit;"><h1>Surge小説</h1></a></div>
+            <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;"><h1>Surge小説</h1></a></div>
         </div>
     </header>
 
@@ -56,53 +56,61 @@
         </div>
     </main>
 
-    <script>
-        let editIndex = null;
+    <script type="module">
+        import { auth, onAuthStateChanged } from './js/firebase-config.js';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const user = JSON.parse(localStorage.getItem('surge_user'));
+        let editIndex = null;
+        let currentUser = null;
+
+        onAuthStateChanged(auth, (user) => {
             if (!user) {
                 window.location.href = 'login.html';
                 return;
             }
+            currentUser = user;
 
             const urlParams = new URLSearchParams(window.location.search);
             const edit = urlParams.get('edit');
             if (edit !== null) {
                 editIndex = parseInt(edit);
-                const works = JSON.parse(localStorage.getItem('surge_user_works')) || [];
+                const allWorks = JSON.parse(localStorage.getItem('surge_user_works_v2')) || {};
+                const works = allWorks[user.email] || [];
                 const work = works[editIndex];
                 if (work) {
                     document.getElementById('novelTitle').value = work.title;
                     document.getElementById('novelGenre').value = work.genre;
+                    // For rich text, we use innerHTML but it was saved from contenteditable
                     document.getElementById('novelContent').innerHTML = work.content;
                     document.querySelector('.btn-primary').textContent = '更新する';
                 }
             }
         });
 
-        function execCmd(command, value = null) {
+        window.execCmd = function(command, value = null) {
             document.execCommand(command, false, value);
         }
 
-        function saveWork() {
+        window.saveWork = function() {
             const title = document.getElementById('novelTitle').value;
             const genre = document.getElementById('novelGenre').value;
             const content = document.getElementById('novelContent').innerHTML;
 
-            if (!title || !content.trim()) {
+            if (!title || !content.trim() || content === '<br>') {
                 alert('タイトルと本文を入力してください。');
                 return;
             }
 
-            const works = JSON.parse(localStorage.getItem('surge_user_works')) || [];
-            const user = JSON.parse(localStorage.getItem('surge_user'));
+            if (!currentUser) return;
+
+            const allWorks = JSON.parse(localStorage.getItem('surge_user_works_v2')) || {};
+            if (!allWorks[currentUser.email]) allWorks[currentUser.email] = [];
+            const works = allWorks[currentUser.email];
 
             const workData = {
                 title,
                 genre,
                 content,
-                author: user.nickname,
+                author: currentUser.displayName || currentUser.email,
                 date: new Date().toLocaleDateString('ja-JP')
             };
 
@@ -112,12 +120,13 @@
                 works.push(workData);
             }
 
-            localStorage.setItem('surge_user_works', JSON.stringify(works));
+            allWorks[currentUser.email] = works;
+            localStorage.setItem('surge_user_works_v2', JSON.stringify(allWorks));
             alert('保存しました！');
             window.location.href = 'mypage.html';
         }
 
-        function downloadWork() {
+        window.downloadWork = function() {
             const title = document.getElementById('novelTitle').value;
             const content = document.getElementById('novelContent').innerHTML;
 
@@ -131,7 +140,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>${title} - Surge小説</title>
+    <title>\${title} - Surge小説</title>
     <style>
         body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; }
         h1 { border-bottom: 2px solid #333; padding-bottom: 10px; }
@@ -139,8 +148,8 @@
     </style>
 </head>
 <body>
-    <h1>${title}</h1>
-    <div class="content">${content}</div>
+    <h1>\${title}</h1>
+    <div class="content">\${content}</div>
 </body>
 </html>`;
 
@@ -148,7 +157,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${title}.html`;
+            a.download = `\${title}.html`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);

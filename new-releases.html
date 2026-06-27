@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新刊・新着作品 - Surge小説</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .filter-bar { background: white; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; display: flex; gap: 1rem; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .filter-bar select { padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo"><a href="index.html" style="color: inherit;"><h1>Surge小説</h1></a></div>
+            <nav class="top-nav">
+                <ul>
+                    <li><a href="genre.html">ジャンル</a></li>
+                    <li><a href="ranking.html">ランキング</a></li>
+                    <li><a href="new-releases.html">新刊</a></li>
+                    <li><a href="contests.html">コンテスト</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <h1 style="margin-bottom: 2rem;">新着・新刊作品一覧</h1>
+
+            <div class="filter-bar">
+                <span>並び替え:</span>
+                <select>
+                    <option>投稿日時が新しい順</option>
+                    <option>更新日時が新しい順</option>
+                </select>
+                <span style="margin-left: 1rem;">ジャンル:</span>
+                <select>
+                    <option>すべて</option>
+                    <option>幻想</option>
+                    <option>SF</option>
+                    <option>ミステリー</option>
+                    <option>現代ドラマ</option>
+                </select>
+            </div>
+
+            <div class="novel-grid">
+                <!-- Reusing some from index + others -->
+                <article class="novel-card-modern">
+                    <div class="genre-tag">幻想</div>
+                    <a href="novels/story1.html">
+                        <h3>星降る夜の散歩道</h3>
+                        <p class="author">蒼井 空</p>
+                        <p class="description">丘の上の大きな樫の木の下、少年は一匹の銀色の狐に出会う。</p>
+                    </a>
+                </article>
+                <article class="novel-card-modern">
+                    <div class="genre-tag">SF</div>
+                    <a href="novels/story5.html">
+                        <h3>時計仕掛けの庭園</h3>
+                        <p class="author">ギヤ・ワッツ</p>
+                        <p class="description">全ての歯車が止まったとき、真実の扉が開く。</p>
+                    </a>
+                </article>
+                <article class="novel-card-modern">
+                    <div class="genre-tag">ミステリー</div>
+                    <a href="novels/story19.html">
+                        <h3>霧の街の探偵事務所</h3>
+                        <p class="author">シャーロック</p>
+                        <p class="description">消えたダイヤモンドと、残された一枚のトランプ。</p>
+                    </a>
+                </article>
+                <!-- Add more -->
+                <article class="novel-card-modern">
+                    <div class="genre-tag">現代ドラマ</div>
+                    <a href="novels/story3.html">
+                        <h3>猫とコーヒーと、雨の午後</h3>
+                        <p class="author">佐藤 陽子</p>
+                    </a>
+                </article>
+                <article class="novel-card-modern">
+                    <div class="genre-tag">幻想</div>
+                    <a href="novels/story6.html">
+                        <h3>夢を売る露店</h3>
+                        <p class="author">夢野 幻</p>
+                    </a>
+                </article>
+                <article class="novel-card-modern">
+                    <div class="genre-tag">SF</div>
+                    <a href="novels/story9.html">
+                        <h3>電脳世界の迷い子</h3>
+                        <p class="author">ネオ</p>
+                    </a>
+                </article>
+                <article class="novel-card-modern">
+                    <div class="genre-tag">短編</div>
+                    <a href="novels/story22.html">
+                        <h3>短編小説 第22話</h3>
+                        <p class="author">Surge作家</p>
+                    </a>
+                </article>
+                <article class="novel-card-modern">
+                    <div class="genre-tag">短編</div>
+                    <a href="novels/story23.html">
+                        <h3>短編小説 第23話</h3>
+                        <p class="author">Surge作家</p>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Surge小説 Inc.</p>
+        </div>
+    </footer>
+</body>
+</html>
